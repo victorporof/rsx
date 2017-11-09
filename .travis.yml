@@ -1,0 +1,26 @@
+language: rust
+os:
+  - linux
+  # - osx
+rust:
+  - nightly
+notifications:
+  email: false
+before_script:
+  - cargo +nightly install rustfmt-nightly --vers 0.3.8 --force
+  # - cargo install clippy --force
+  - export PATH=$PATH:~/.cargo/bin
+script:
+  - travis_wait 30 cargo build --verbose
+  - travis_wait 30 cargo test --verbose
+  - travis_wait 30 cargo +nightly fmt --all -- --write-mode=diff
+  # - travis_wait 30 cargo clippy --all -- --deny warnings
+after_success:
+  - |
+      if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" == "master" ]]; then
+        cargo doc &&
+        echo "<meta http-equiv=refresh content=0;url=rsx/index.html>" > target/doc/index.html &&
+        git clone https://github.com/davisp/ghp-import.git &&
+        ./ghp-import/ghp_import.py -n -p -f -m "Documentation upload" -r https://"$GH_TOKEN"@github.com/"$TRAVIS_REPO_SLUG.git" target/doc &&
+        echo "Uploaded documentation"
+      fi

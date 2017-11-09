@@ -1,0 +1,21 @@
+[package]
+name = "rsx"
+version = "0.1.0"
+authors = ["Victor Porof <victor.porof@gmail.com>"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+base64-util = { git = "https://github.com/victorporof/rsx-resources.git", default-features = false }
+quote = "0.3.15"
+regex = "0.2.2"
+rsx-images = { git = "https://github.com/victorporof/rsx-resources.git", default-features = false }
+rsx-parser = { git = "https://github.com/victorporof/rsx-parser.git", default-features = false }
+rsx-stylesheet = { git = "https://github.com/victorporof/rsx-stylesheet.git", default-features = false, features = ["css-parse"] }
+
+[dev-dependencies]
+rsx-dom = { git = "https://github.com/victorporof/rsx-dom.git", default-features = false, features = ["hashmap-arena"] }
+rsx-fonts = { git = "https://github.com/victorporof/rsx-resources.git", default-features = false }
+rsx-layout = { git = "https://github.com/victorporof/rsx-layout.git", default-features = false }
+rsx-shared = { git = "https://github.com/victorporof/rsx-shared.git", default-features = false, features = ["impl-dummy"] }
